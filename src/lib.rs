@@ -10,6 +10,9 @@ pub use pallet::*;
 pub mod pallet {
 	use super::*;
 
+	#[pallet::storage]
+	pub(super) type CountForKitties<T: Config> = StorageValue<Value = u32>;
+
 	#[pallet::pallet]
 	pub struct Pallet<T>(core::marker::PhantomData<T>);
 
