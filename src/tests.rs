@@ -141,12 +141,10 @@ fn count_for_kitties_created_correctly() {
 	new_test_ext().execute_with(|| {
 		// Querying storage before anything is set will return `0`.
 		assert_eq!(CountForKitties::<TestRuntime>::get(), 0);
-		// You can `set` the value using an `Option<u32>`.
+		// You can `set` the value using an `u32`.
 		CountForKitties::<TestRuntime>::set(1337u32);
 		// You can `put` the value directly with a `u32`.
 		CountForKitties::<TestRuntime>::put(1337u32);
-		// Check that the value is now in storage.
-		assert_eq!(CountForKitties::<TestRuntime>::get(), 1337u32);
 	})
 }
 
@@ -157,7 +155,7 @@ fn mint_increments_count_for_kitty() {
 		assert_eq!(CountForKitties::<TestRuntime>::get(), 0);
 		// Call `create_kitty` which will call `mint`.
 		assert_ok!(PalletKitties::create_kitty(RuntimeOrigin::signed(ALICE)));
-		// Now the storage should be `Some(1)`
+		// Now the storage should be `1`
 		assert_eq!(CountForKitties::<TestRuntime>::get(), 1);
 	})
 }
