@@ -24,7 +24,7 @@ impl<T: Config> Pallet<T> {
 	pub fn do_transfer(from: T::AccountId, to: T::AccountId, kitty_id: [u8; 32]) -> DispatchResult {
 		// sanity checks
 		ensure!(!(from == to), Error::<T>::TransferToSelf);
-		let mut kitty = Kitties::<T>::try_get(&kitty_id).map_err(|_| Error::<T>::NoKitty)?;
+		let mut kitty = Kitties::<T>::get(&kitty_id).ok_or(Error::<T>::NoKitty)?;
 		ensure!(kitty.owner == from, Error::<T>::NotOwner);
 
 		// updates
@@ -35,7 +35,6 @@ impl<T: Config> Pallet<T> {
 		let remove_index =
 			from_owned.iter().position(|k| *k == kitty_id).ok_or(Error::<T>::NoKitty)?;
 		from_owned.swap_remove(remove_index);
-
 		KittiesOwned::<T>::insert(&from, from_owned);
 
 		kitty.owner = to.clone();
