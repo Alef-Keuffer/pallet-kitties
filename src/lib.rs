@@ -19,8 +19,8 @@ pub mod pallet {
 	}
 
 	pub(super) struct Kitty<T: Config> {
-		dna: [u8; 32],
-		owner: T::AccountId,
+		pub dna: [u8; 32],
+		pub owner: T::AccountId,
 	}
 
 	#[pallet::storage]
