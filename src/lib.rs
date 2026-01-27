@@ -52,6 +52,9 @@ pub mod pallet {
 		TooManyKitties,
 		DuplicateKitty,
 		TooManyOwned,
+		TransferToSelf,
+		NoKitty,
+		NotOwner,
 	}
 
 	#[pallet::call]
@@ -70,7 +73,7 @@ pub mod pallet {
 		) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			Self::do_transfer(who, to, kitty_id)?;
-            Ok(())
+			Ok(())
 		}
 	}
 }

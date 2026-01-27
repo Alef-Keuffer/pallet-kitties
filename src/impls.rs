@@ -2,6 +2,7 @@ use super::*;
 use frame::prelude::*;
 
 use frame::primitives::BlakeTwo256;
+use frame::traits::DefensiveOption;
 use frame::traits::Hash;
 
 impl<T: Config> Pallet<T> {
@@ -21,6 +22,25 @@ impl<T: Config> Pallet<T> {
 	}
 
 	pub fn do_transfer(from: T::AccountId, to: T::AccountId, kitty_id: [u8; 32]) -> DispatchResult {
+		// sanity checks
+		ensure!(!(from == to), Error::<T>::TransferToSelf);
+		let mut kitty = Kitties::<T>::try_get(&kitty_id).map_err(|_| Error::<T>::NoKitty)?;
+		ensure!(kitty.owner == from, Error::<T>::NotOwner);
+
+		// updates
+		KittiesOwned::<T>::try_append(&to, kitty_id).map_err(|_| Error::<T>::TooManyOwned)?;
+
+		let mut from_owned = KittiesOwned::<T>::get(&from);
+		// this should never error since we already checked kitty.owner == from
+		let remove_index =
+			from_owned.iter().position(|k| *k == kitty_id).ok_or(Error::<T>::NoKitty)?;
+		from_owned.swap_remove(remove_index);
+
+		KittiesOwned::<T>::insert(&from, from_owned);
+
+		kitty.owner = to.clone();
+		Kitties::<T>::insert(&kitty_id, kitty);
+
 		Self::deposit_event(Event::<T>::Transferred { from, to, kitty_id });
 		Ok(())
 	}
