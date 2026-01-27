@@ -180,7 +180,8 @@ fn kitties_map_created_correctly() {
 	new_test_ext().execute_with(|| {
 		let zero_key = [0u8; 32];
 		assert!(!Kitties::<TestRuntime>::contains_key(zero_key));
-		Kitties::<TestRuntime>::insert(zero_key, ());
+        let kitty = Kitty::<TestRuntime> { dna: zero_key, owner: ALICE };
+		Kitties::<TestRuntime>::insert(zero_key, kitty);
 		assert!(Kitties::<TestRuntime>::contains_key(zero_key));
 	})
 }

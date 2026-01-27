@@ -6,9 +6,11 @@ impl<T: Config> Pallet<T> {
 		// Check if the kitty does not already exist in our storage map
 		ensure!(!Kitties::<T>::contains_key(dna), Error::<T>::DuplicateKitty);
 
+		let kitty = Kitty::<T> { dna, owner: owner.clone() };
+
 		let current_count = CountForKitties::<T>::get();
 		let new_count = current_count.checked_add(1).ok_or(Error::<T>::TooManyKitties)?;
-		Kitties::<T>::insert(dna, ());
+		Kitties::<T>::insert(dna, kitty);
 		CountForKitties::<T>::set(new_count);
 		Self::deposit_event(Event::<T>::Created { owner });
 		Ok(())
