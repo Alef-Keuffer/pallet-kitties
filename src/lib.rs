@@ -18,8 +18,8 @@ pub mod pallet {
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
-	#[derive(Encode, Decode, TypeInfo)]
-    #[scale_info(skip_type_params(T))]
+	#[derive(Encode, Decode, TypeInfo, MaxEncodedLen)]
+	#[scale_info(skip_type_params(T))]
 	pub struct Kitty<T: Config> {
 		// Using 32 bytes to represent a kitty DNA
 		pub dna: [u8; 32],
