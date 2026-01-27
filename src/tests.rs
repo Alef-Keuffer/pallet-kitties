@@ -167,9 +167,9 @@ fn mint_errors_when_overflow() {
 		CountForKitties::<TestRuntime>::set(u32::MAX);
 		// `create_kitty` should not succeed because of safe math.
 		assert_noop!(
-            PalletKitties::create_kitty(RuntimeOrigin::signed(1)),
-            Error::<TestRuntime>::TooManyKitties
-        );
+			PalletKitties::create_kitty(RuntimeOrigin::signed(1)),
+			Error::<TestRuntime>::TooManyKitties
+		);
 	})
 }
 
