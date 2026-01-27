@@ -19,6 +19,7 @@ impl<T: Config> Pallet<T> {
 		Ok(())
 	}
 
+	// Generates and returns DNA
 	pub fn gen_dna() -> [u8; 32] {
 		let unique_payload = (
 			frame_system::Pallet::<T>::parent_hash(),
