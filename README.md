@@ -13,3 +13,12 @@
 > across other modules in your blockchain.
 >
 > &mdash; <cite>3.1.20 Kitty Struct # Creating a Struct</cite>
+
+> As a rule, you only want to store data in your blockchain which is necessary
+> for consensus. Blockchains are extremely slow, low powered, and expensive.
+> Blockchains are extremely good at one thing: achieving agreement among a
+> decentralized and untrusted set of individuals.
+>
+> &mdash; <cite>3.4.23 Track Owned Kitties # Redundant Storage</cite>
+
+Wasn't Polkadot about achieving distributed computing?
