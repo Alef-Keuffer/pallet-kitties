@@ -18,6 +18,11 @@ pub mod pallet {
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
+	pub(super) struct Kitty<T: Config> {
+		dna: [u8; 32],
+		owner: T::AccountId,
+	}
+
 	#[pallet::storage]
 	pub(super) type CountForKitties<T: Config> = StorageValue<Value = u32, QueryKind = ValueQuery>;
 
