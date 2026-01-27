@@ -32,8 +32,10 @@ impl<T: Config> Pallet<T> {
 
 		let mut from_owned = KittiesOwned::<T>::get(&from);
 		// this should never error since we already checked kitty.owner == from
-		let remove_index =
-			from_owned.iter().position(|k| *k == kitty_id).defensive_ok_or(Error::<T>::NoKitty)?;
+		let remove_index = from_owned
+			.iter()
+			.position(|k| *k == kitty_id)
+			.defensive_ok_or(Error::<T>::NoKitty)?;
 		from_owned.swap_remove(remove_index);
 		KittiesOwned::<T>::insert(&from, from_owned);
 
