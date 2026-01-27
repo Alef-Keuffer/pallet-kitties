@@ -13,6 +13,9 @@ pub mod pallet {
 	#[pallet::storage]
 	pub(super) type CountForKitties<T: Config> = StorageValue<Value = u32, QueryKind=ValueQuery>;
 
+	#[pallet::storage]
+	pub(super) type Kitties<T: Config> = StorageMap<Key = [u8; 32], Value = ()>;
+
 	#[pallet::pallet]
 	pub struct Pallet<T>(core::marker::PhantomData<T>);
 
