@@ -7,10 +7,10 @@ use frame::traits::Hash;
 
 impl<T: Config> Pallet<T> {
 	pub fn mint(owner: T::AccountId, dna: [u8; 32]) -> DispatchResult {
-		// Check if the kitty does not already exist in our storage map
+		// ensure kitty does not already exist in our storage map
 		ensure!(!Kitties::<T>::contains_key(dna), Error::<T>::DuplicateKitty);
 
-		let kitty = Kitty::<T> { dna, owner: owner.clone() };
+		let kitty = Kitty::<T> { dna, owner: owner.clone(), price: None };
 
 		let current_count = CountForKitties::<T>::get();
 		let new_count = current_count.checked_add(1).ok_or(Error::<T>::TooManyKitties)?;
@@ -40,6 +40,7 @@ impl<T: Config> Pallet<T> {
 		KittiesOwned::<T>::insert(&from, from_owned);
 
 		kitty.owner = to.clone();
+		kitty.price = None;
 		Kitties::<T>::insert(&kitty_id, kitty);
 
 		Self::deposit_event(Event::<T>::Transferred { from, to, kitty_id });
