@@ -58,4 +58,9 @@ impl<T: Config> Pallet<T> {
 
 		BlakeTwo256::hash_of(&unique_payload).into()
 	}
+    
+    pub fn do_set_price(caller: T::AccountId, kitty_id: [u8; 32], new_price: Option<BalanceOf<T>>) -> DispatchResult {
+        Self::deposit_event(Event::<T>::PriceSet { owner: caller, kitty_id, new_price });
+        Ok(())
+    }
 }
