@@ -56,7 +56,7 @@ pub mod pallet {
 		Created { owner: T::AccountId },
 		Transferred { from: T::AccountId, to: T::AccountId, kitty_id: [u8; 32] },
 		PriceSet { owner: T::AccountId, kitty_id: [u8; 32], new_price: Option<BalanceOf<T>> },
-		Sold { buyer: T::AccountId, kitty_id: [u8; 32], real_price: BalanceOf<T> },
+		Sold { buyer: T::AccountId, kitty_id: [u8; 32], price: BalanceOf<T> },
 	}
 
 	#[pallet::error]
@@ -67,8 +67,8 @@ pub mod pallet {
 		TransferToSelf,
 		NoKitty,
 		NotOwner,
-        NotForSale,
-        MaxPriceTooLow,
+		NotForSale,
+		MaxPriceTooLow,
 	}
 
 	#[pallet::call]

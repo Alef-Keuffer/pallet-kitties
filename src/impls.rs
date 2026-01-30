@@ -82,11 +82,10 @@ impl<T: Config> Pallet<T> {
 		let real_price = kitty.price.ok_or(Error::<T>::NotForSale)?;
 		ensure!(price >= real_price, Error::<T>::MaxPriceTooLow);
 
-		let r =
-			T::NativeBalance::transfer(&buyer, &kitty.owner, real_price, Preservation::Preserve)?;
-		Self::do_transfer(&kitty.owner, &buyer, kitty_id)?;
+		T::NativeBalance::transfer(&buyer, &kitty.owner, real_price, Preservation::Preserve)?;
+		Self::do_transfer(kitty.owner, buyer.clone(), kitty_id)?;
 
-		Self::deposit_event(Event::<T>::Sold { buyer, kitty_id, real_price: r });
+		Self::deposit_event(Event::<T>::Sold { buyer, kitty_id, price: real_price });
 		Ok(())
 	}
 }
