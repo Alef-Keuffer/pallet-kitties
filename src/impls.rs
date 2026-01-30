@@ -79,5 +79,5 @@ impl<T: Config> Pallet<T> {
 	) -> DispatchResult {
 		Self::deposit_event(Event::<T>::Sold { buyer, kitty_id, price });
 		Ok(())
-    }
+	}
 }
